@@ -1,4 +1,4 @@
-package com.example.mandelbrotserver.controllers;
+package com.example.mandelbrotserver.MandelbrotCalculator;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

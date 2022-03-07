@@ -1,5 +1,6 @@
 package com.example.mandelbrotserver.controllers;
 
+import com.example.mandelbrotserver.services.MandelbrotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -10,18 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping()
 public class MandelbrotController {
 
-    private final MandelbrotService MandelbrotService;
+    private final com.example.mandelbrotserver.services.MandelbrotService MandelbrotService;
 
     @Autowired
     public MandelbrotController(MandelbrotService service) {

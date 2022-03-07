@@ -1,16 +1,10 @@
-package com.example.mandelbrotserver.controllers;
+package com.example.mandelbrotserver.Sockets;
 
-import java.awt.*;
+import com.example.mandelbrotserver.MandelbrotCalculator.MandelbrotCalculation;
+
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.HashMap;
-import java.util.Map;
 
 public class SocketServer {
 

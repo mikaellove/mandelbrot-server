@@ -1,5 +1,6 @@
-package com.example.mandelbrotserver.controllers;
+package com.example.mandelbrotserver.services;
 
+import com.example.mandelbrotserver.Sockets.SocketServer;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
