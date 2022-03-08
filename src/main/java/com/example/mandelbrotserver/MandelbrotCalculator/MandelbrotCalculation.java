@@ -25,15 +25,23 @@ public class MandelbrotCalculation extends Thread{
     @Override
     public void run()
     {
+        PrintWriter out;
+        /**
+         * Waiting for client socket to connect.
+         */
         System.out.println("start thread");
         try
         {
             socket = serverSocket.accept();
+            out = new PrintWriter(socket.getOutputStream(), true);
         }
         catch (IOException e){
             e.printStackTrace();
         }
 
+        /**
+         * Mandelbrot calculation
+         */
         for (int col = 0; col < image.getHeight(); col++) {
             for (int row = rowIndex; row < image.getWidth(); row++) {
                 double c_re = (col - image.getWidth() / 2.0) * 4.0 / image.getWidth();
@@ -47,15 +55,26 @@ public class MandelbrotCalculation extends Thread{
                     iteration++;
                 }
 
+                /**
+                 * Sets a pixel on the buffered image with the given color.
+                 *
+                 * I would like to have time to implement the commented out parts, write the pixel to the output stream and let the client socket receive it.
+                 * But now I set the pixel of the image and send the image in bytes in the response body.
+                 */
                 if (iteration < max) {
                     image.setRGB(row,col,red);
+                    //out.write(image.getRGB(row,col));
                 } else {
                     image.setRGB(row,col,blue);
+                    //out.write(image.getRGB(row,col));
                 }
 
             }
         }
 
+        /**
+         * When the calculation is finished close socket on server and client side.
+         */
         try {
             serverSocket.close();
             socket.close();

@@ -14,20 +14,30 @@ import java.util.List;
 public class MandelbrotService {
 
     public byte[] generateImage(int width, int height, int max, List<Integer> ports){
+        /**
+         * Creating image from variables passed in from client.
+         * Instantiating list for caching the started threads.
+         */
         BufferedImage img = new BufferedImage(width,height,BufferedImage.TYPE_INT_RGB);
         List<Thread> activeThreads = new ArrayList<>();
 
         try
         {
-            int split = height / ports.size();
+            int partToRender = height / ports.size();
             for(int port :ports){
-                height = height - split;
+                height = height - partToRender;
 
+                /**
+                 * Creating instances of the server-sockets that will render the image.
+                 */
                 SocketServer socketServer = new SocketServer(port);
                 socketServer.setUpSocket();
 
+                /**
+                 * Waiting for client socket to connect then accepts that connection.
+                 * Returns a thread on which the calculation are performed, stores that in List of threads.
+                 */
                 Thread thread = socketServer.acceptSocketConnection(height,img,max);
-
                 activeThreads.add(thread);
             }
         }
@@ -36,6 +46,9 @@ public class MandelbrotService {
         }
 
 
+        /**
+         * Waiting for each thread to complete the calculations.
+         */
         activeThreads.forEach( thread -> {
             try {
                 thread.join();
@@ -44,6 +57,9 @@ public class MandelbrotService {
             }
         });
 
+        /**
+         * Write the buffered image to a ByteArrayOutputStream.
+         */
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
             System.out.println("Write Image");
@@ -51,7 +67,9 @@ public class MandelbrotService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        /**
+         * Converts the output stream into a byte array and returns it.
+         */
         byte[] imageInByte = byteArrayOutputStream.toByteArray();
         return imageInByte;
     }
